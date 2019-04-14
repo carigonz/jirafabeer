@@ -2,6 +2,9 @@
 
 require_once "funciones.php";
 $errores=[];
+$lastNameOK="";
+$nameOk="";
+$lastNameOK="";
 
 var_dump($_POST);
 echo "<br>";
@@ -10,7 +13,9 @@ if ($_POST) {
   $errores = validarRegistro($_POST);
   var_dump($errores);
 
-
+  $nameOk = trim($_POST["name"]);
+  $lastNameOk = trim($_POST["lastName"]);
+  $emailOk = trim($_POST["email"]);
 
 
 
@@ -151,7 +156,7 @@ if ($_POST) {
                 </form>
                   <h1>REGISTRATE</h1>
                   <h3>¿No tenes cuenta? Completá tus datos</h3>
-                  <form action="#" method="POST" class="tarjets">
+                  <form action="#section-forms" method="POST" class="tarjets">
                   <?php if (isset($errores["name"])):?>
                     <div class="form-group">
                       <label for="name">Nombre</label>
@@ -161,7 +166,7 @@ if ($_POST) {
                   <?php else :?>
                     <div class="form-group">
                       <label for="name">Nombre</label>
-                      <input type="text" class="form-control" id="name" name="name" value="">
+                      <input type="text" class="form-control" id="name" name="name" value="<?= $nameOk?>">
                     </div>
                   <?php endif ?>
                   <?php if (isset($errores["lastName"])):?>
@@ -173,25 +178,31 @@ if ($_POST) {
                   <?php else: ?>
                     <div class="form-group">
                         <label for="lastName">Apellido</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName">
+                        <input type="text" class="form-control" id="lastName" name="lastName" value="<?=$lastNameOK?>">
                     </div>
                   <?php endif ?>
-                  <?php if(isset($errores["gender"])):?>
                     <div class="form-group">
-                      <label for="gender">Género:</label><br>
+                    <label for="gender">Género:</label><br>
+                    <?php if(isset($errores["gender"]) && $errores["gender"]=="fem"):?>
+                      <input type="radio" name="gender" value="fem" checked>Femenino
+                    <?php else:?>
                       <input type="radio" name="gender" value="fem">Femenino
+                    <?php endif?>
+                    <?php if (isset($_POST["gender"]) && $_POST["gender"] == "masc"): ?>
+                      <input type="radio" name="gender" value="masc" checked>Masculino
+                    <?php else:?>
                       <input type="radio" name="gender" value="masc">Masculino
-                      <input type="radio" name="gender" value="no-dice">Prefiero no decirlo
+                    <?php endif?>
+                    <?php if (isset($_POST["gender"]) && $_POST["gender"] == "other"): ?>
+                      <input type="radio" name="gender" value="other" ckecked>Prefiero no decirlo
+                    <?php else:?>                      
+                      <input type="radio" name="gender" value="other">Prefiero no decirlo
+                    <?php endif?>
+                    <?php if(isset($errores["gender"])):?>
                       <span class="errores"><?= $errores["gender"] ?></span>
-                    </div>
-                  <?php else:?>
-                  <div class="form-group">
-                      <label for="gender">Género:</label><br>
-                      <input type="radio" name="gender" value="fem">Femenino
-                      <input type="radio" name="gender" value="masc">Masculino
-                      <input type="radio" name="gender" value="no-dice">Prefiero no decirlo
-                    </div>
                   <?php endif?>
+                    </div>
+
                   <?php if(isset($errores["email"])):?>
                     <div class="form-group">
                       <label for="email">Email</label>
@@ -201,7 +212,7 @@ if ($_POST) {
                   <?php else:?>
                     <div class="form-group">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                      <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" value="<?= $emailOk?>">
                     </div>
                   <?php endif?>
                   <?php if(isset($errores["pass"])):?>
