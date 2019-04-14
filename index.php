@@ -225,20 +225,18 @@ if ($_POST) {
                       <input type="password" class="form-control" id="pass2" name="pass2" maxlength="20" tabindex="17" autocapitalize="none" spellcheck="false" autocorrect="off" autocomplete="off" data-uid="5">
                     </div>
                   <?php endif?>
-                  <?php if(isset($errores["adult"])):?>
                     <div class="form-group form-adult">
-                      <input type="checkbox" name="adult" class="form-check-adult" id="adult" value="adult" checked>
-                      <label class="form-check-label" for="adult">Soy mayor de 18 años</label>
-                      <p class="term-conditions">Al registrarme, declaro que soy mayor de edad y acepto los Terminos y condiciones y las Políticas de privacidad.</p>
-                      <span class="errores"><?= $errores["adult"] ?></span>
-                    </div>
-                    <?php else:?>
-                    <div class="form-group form-adult">
-                      <input type="checkbox" name="adult" class="form-check-adult" id="adult" value="adult">
-                      <label class="form-check-label" for="adult">Soy mayor de 18 años</label>
-                      <p class="term-conditions">Al registrarme, declaro que soy mayor de edad y acepto los Terminos y condiciones y las Políticas de privacidad.</p>
-                    </div>
+                    <?php if(isset($errores["adult"])):?>
+                        <input type="checkbox" name="adult" class="form-check-adult" id="adult" value="adult">
+                      <?php else:?>
+                        <input type="checkbox" name="adult" class="form-check-adult" id="adult" value="adult">
                     <?php endif?>
+                        <label class="form-check-label" for="adult">Soy mayor de 18 años</label>
+                        <p class="term-conditions">Al registrarme, declaro que soy mayor de edad y acepto los Terminos y condiciones y las Políticas de privacidad.</p>
+                    <?php if(isset($errores["adult"])):?>
+                        <span class="errores"><?= $errores["adult"] ?></span>
+                    <?php endif?>
+                    </div>
                     <button type="submit" class="btn-standard">Registrarme</button>
                   </form>
               </div>

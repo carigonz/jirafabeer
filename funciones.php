@@ -45,7 +45,7 @@ function validarRegistro($datos){
   }
 
   //adult
-  if(!isset($datos["adult"])==0){
+  if(!isset($datos["adult"])){
     $errores["adult"]="Debe aceptar los términos y condiciones.";
   }
 
