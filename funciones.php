@@ -49,12 +49,67 @@ function validarRegistro($datos){
     $errores["adult"]="Debe aceptar los términos y condiciones.";
   }
 
-
-
-
   return $errores;
 
+}
 
+function lastID(){
+  $json=file_get_contents("db.json");
+  $array=json_decode($json,true);
+
+  if(isset($array)==false){
+    return $lastId=0;
+  }
+  //poruqe $array es asociativo a "usuarios"??
+  $ultimoElemento=array_pop($array["usuarios"]);
+  $lastId=$ultimoElemento["id"]++;
+  return $lastId;
+}
+
+function armarUsuario(){
+
+  return [
+    "id"=>$lastId,
+    "name"=>trim($_POST["name"]),
+    "lastName"=>trim($_POST["lastName"]),
+    "email"=>trim($_POST["email"]),
+    "pass"=>password_hash($_POST["pass"],PASSWORD_DEFAULT)
+  ];
+}
+
+function guardarUsuario($user){
+
+  $json=file_get_contents("db.json");
+  $array=json_decode($json,true);
+  $array["usuario"][]=$user;
+  //que hace json pretty print?
+  $array=json_encode("db.json", JSON_PRETTY_PRINT);
+  file_put_contents("db.json",$array);
+
+}
+
+function buscarPorEmail($email){
+  if(!file_exists("db.json")){
+    $usuarios="";
+  } else{
+    $usuarios=file_get_contents("db.json");
+  }
+
+  if ($usuarios==""){
+    return null;
+  }else{
+    $array=json_decode($usuarios,true);
+  }//no termine de entender porque $array es un array asociativo, porque tengo que poner mis usuarios dentro de la posicion "usuarios" en mi json
+  foreach ($array["usuarios"]as $usuario) {
+    if ($email==$usuario["email"]){
+      return $usuario;
+    }
+  }
+  return null;
+}
+
+function existeElUsuario($email){
+  return buscarPorEmail($email)!==null;
 }
 
 ?>

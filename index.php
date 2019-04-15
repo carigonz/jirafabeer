@@ -4,7 +4,7 @@ require_once "funciones.php";
 $errores=[];
 $lastNameOK="";
 $nameOk="";
-$lastNameOK="";
+$emailOK="";
 
 var_dump($_POST);
 echo "<br>";
@@ -12,30 +12,18 @@ if ($_POST) {
   
   $errores = validarRegistro($_POST);
   var_dump($errores);
-
   $nameOk = trim($_POST["name"]);
   $lastNameOk = trim($_POST["lastName"]);
   $emailOk = trim($_POST["email"]);
 
+  if (empty($errores)){
+    if(!existeElUsuario($_POST["email"])){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+      $usuario=armarUsuario($_POST);
+      $guardarUsuario=guardarUsuario($usuario);
+    }
+  }   
 }
-
-
-
-
 ?>
 
 
@@ -141,7 +129,9 @@ if ($_POST) {
                 <form action="#section-forms" method="post" class="tarjets ">
                   <div class="form-group">
                     <label for="email">Email</label>
+                  <?php /* if(isset($errores["email"])): */?>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                    <span class="errores"><?php/*  $errores["email"]  */?></span>
                   </div>
                   <div class="form-group">
                     <label for="pass">Password</label>
@@ -154,9 +144,9 @@ if ($_POST) {
                     <label class="form-check-label" for="remember">Recordarme</label>
                   </div>
                 </form>
-                  <h1>REGISTRATE</h1>
+                  <h1 id="section-register">REGISTRATE</h1>
                   <h3>¿No tenes cuenta? Completá tus datos</h3>
-                  <form action="#section-forms" method="POST" class="tarjets">
+                <form action="#section-register" method="POST" class="tarjets">
                   <?php if (isset($errores["name"])):?>
                     <div class="form-group">
                       <label for="name">Nombre</label>
