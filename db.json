@@ -1,0 +1,11 @@
+{
+    "usuarios": [
+        {
+            "id": 0,
+            "name": "carolina",
+            "lastName": "gonzalez",
+            "email": "carolinagonzalez794@gmail.com",
+            "pass": "$2y$10$aA678MvYU4PMsuyvSYufLOsWYsI5P6xLQs.Ovk8Z01bjfpYN6HOEq"
+        }
+    ]
+}

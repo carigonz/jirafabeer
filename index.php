@@ -4,25 +4,43 @@ require_once "funciones.php";
 $errores=[];
 $lastNameOK="";
 $nameOk="";
-$emailOK="";
+$emailOk="";
+$usuarioExistente="";
 
 var_dump($_POST);
 echo "<br>";
 if ($_POST) {
-  
-  $errores = validarRegistro($_POST);
-  var_dump($errores);
-  $nameOk = trim($_POST["name"]);
-  $lastNameOk = trim($_POST["lastName"]);
-  $emailOk = trim($_POST["email"]);
+  if (!empty($_POST["register"])) {
+    
+    $errores = validarRegistro($_POST);
+    //var_dump($errores);
+    $nameOk = trim($_POST["name"]);
+    $lastNameOk = trim($_POST["lastName"]);
+    $emailOk = trim($_POST["email"]);
 
-  if (empty($errores)){
-    if(!existeElUsuario($_POST["email"])){
+    if (empty($errores)){
+      if(!existeElUsuario($_POST["email"])){
 
-      $usuario=armarUsuario($_POST);
-      $guardarUsuario=guardarUsuario($usuario);
+        $usuario=armarUsuario($_POST);
+        $guardarUsuario=guardarUsuario($usuario);
+        /* var_dump($guardarUsuario);
+        exit; */
+      }else{
+        $usuarioExistente = "El usuario ya se encuentra registrado.";
+      }
+    }   
+  }
+  if (!empty($_POST['login'])) {
+    
+    $errores = validarLogin($_POST);
+    var_dump($errores);
+
+    if (empty($errores)){
+      $usuario= buscarUsuario($_POST["email"],$_POST["pass"]);
     }
-  }   
+    
+  }
+
 }
 ?>
 
@@ -39,8 +57,8 @@ if ($_POST) {
   <link rel="icon" type="image/png" href="IMG/iconbeer.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-    <!-- <header class="nav-header"> 
+<body><!-- 
+    <header class="nav-header"> 
         <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
         <label for="abrir-cerrar"><a href="#home" class="btn-home"><i class="fa fa-home"></i></a><span class="abrir">&#9776;</span><span class="cerrar">&#9776; Cerrar</span></label>
         <div id="sidebar" class="sidebar">
@@ -56,9 +74,9 @@ if ($_POST) {
     <main>
       <div id="contenido">
         <section class="landing" id="home">
-            <div class="bloque-home"><!-- 
-                <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video>
-                 --><div class="logo-landing">
+            <div class="bloque-home">
+                <!-- <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video> -->
+                <div class="logo-landing">
                     <img class="logo-landing-img" src="IMG\girafa-beer-logo.png" alt="girafa-logo">
                     <h2 class="title-princ">jirafa BrewHouse</h2>
                 </div>
@@ -129,16 +147,25 @@ if ($_POST) {
                 <form action="#section-forms" method="post" class="tarjets ">
                   <div class="form-group">
                     <label for="email">Email</label>
-                  <?php /* if(isset($errores["email"])): */?>
+                  <?php if(isset($errores["email"])):?>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
-                    <span class="errores"><?php/*  $errores["email"]  */?></span>
+                    <span class="errores"><?php $errores["email"] ?></span>
+                  <?php else:?>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+                  <?php endif ?>
                   </div>
                   <div class="form-group">
                     <label for="pass">Password</label>
+                  <?php if(isset($errores["pass"])):?>
                     <input type="password" class="form-control" id="pass" name="pass" aria-describedby="forgotPass">
+                    <span class="errores"><?php $errores["pass"] ?></span>
                     <p><a class="forgot-pass" href="">Olvidé mi contraseña</a></p>
+                  <?php else :?>
+                  <input type="password" class="form-control" id="pass" name="pass" aria-describedby="forgotPass">
+                    <p><a class="forgot-pass" href="">Olvidé mi contraseña</a></p>
+                  <?php endif ?>
                   </div>
-                  <button type="submit" class="btn-standard">Ingresar</button>
+                  <button type="submit" class="btn-standard" value="login" name="login">Ingresar</button>
                   <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="remember">
                     <label class="form-check-label" for="remember">Recordarme</label>
@@ -146,7 +173,10 @@ if ($_POST) {
                 </form>
                   <h1 id="section-register">REGISTRATE</h1>
                   <h3>¿No tenes cuenta? Completá tus datos</h3>
-                <form action="#section-register" method="POST" class="tarjets">
+              <form action="#section-register" method="POST" class="tarjets">
+                <?php /* if (existeElUsuario($_POST["email"])): */?>
+                  <!-- <span class="errores"><?= $usuarioExistente ?></span> -->
+                <?php /* endif */?>
                   <?php if (isset($errores["name"])):?>
                     <div class="form-group">
                       <label for="name">Nombre</label>
@@ -238,7 +268,7 @@ if ($_POST) {
                         <span class="errores"><?= $errores["adult"] ?></span>
                     <?php endif?>
                     </div>
-                    <button type="submit" class="btn-standard">Registrarme</button>
+                    <button type="submit" name="register" value="register" class="btn-standard">Registrarme</button>
                   </form>
               </div>
             </div>
