@@ -55,7 +55,7 @@ function actualizarRegistro($datos){
   if (isset($datos["name"])){
     if (strlen($datos["name"])==0){
       $errores["name"]="El campo no puede estar vacío.";
-    }elseif (preg_match("^[a-z[:space:]]*$^",$_POST['name'])===false){
+    }elseif (preg_match("/^[0-9]+$^/",$_POST['name'])){
       $errores["name"] = "El nombre no puede contener números.";
     }
   }
