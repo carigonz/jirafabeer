@@ -201,7 +201,7 @@ if ($_POST) {
                   <h1 id="section-register">REGISTRATE</h1>
                   <h3>¿No tenes cuenta? Completá tus datos</h3>
               <form action="#section-register" method="POST" class="tarjets">
-                <?php if (existeElUsuario($_POST["email"])):?>
+                <?php if (isset($_POST["email"]) && existeElUsuario($_POST["email"])):?>
                   <span class="errores"><?= $usuarioExistente ?></span>
                 <?php endif ?>
                   <?php if (isset($errores["name"])):?>

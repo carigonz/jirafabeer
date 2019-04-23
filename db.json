@@ -5,28 +5,7 @@
             "name": "carolina",
             "lastName": "gonzalez",
             "email": "carolinagonzalez794@gmail.com",
-            "pass": "$2y$10$aA678MvYU4PMsuyvSYufLOsWYsI5P6xLQs.Ovk8Z01bjfpYN6HOEq"
-        },
-        {
-            "id": 1,
-            "name": "julieta",
-            "lastName": "lado",
-            "email": "julieta@lado.com",
-            "pass": "$2y$10$QAaI\/jBaMO.ZMUy\/wjtQ1uohbBS9DnLsk7LbGlsQ.wOghxGI45yoW"
-        },
-        {
-            "id": 2,
-            "name": "brayan",
-            "lastName": "bonfante",
-            "email": "brayan@bonfante.com",
-            "pass": "$2y$10$K\/wYS1Uqi3\/xyKYLKnQiX.96rU8GeOqCB056nvvEB7m3BWtP34F6K"
-        },
-        {
-            "id": 3,
-            "name": "cosme",
-            "lastName": "fulanito",
-            "email": "cosme@fulanito.com",
-            "pass": "$2y$10$2VFfXKI8oP5xCRx1D86fRezMoPe5qqOHbBvlTkxQFase9r9Egw1PG"
+            "pass": "$2y$10$QFAi7Y9Nhn\/J6Hqj1uD9HuPm427rssuNE3u53q.RgB8P6eFp7WVfW"
         }
     ]
 }
