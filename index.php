@@ -1,6 +1,13 @@
 <?php
 
 require_once "funciones.php";
+
+
+//if (usuarioLogueado()){
+  //redirije a exito.php
+//}
+
+
 $errores=[];
 $lastNameOk="";
 $nameOk="";
@@ -34,19 +41,23 @@ if ($_POST) {
   if (!empty($_POST['login'])) {
     
     $errores = validarLogin($_POST);
-    //var_dump($errores);
+    var_dump($errores);
 
     if (empty($errores)){
       $usuario= buscarUsuario($_POST["email"]);
       
       var_dump($usuario);
       //var_dump($usuario);
-      if ($usuario == "La contraseña es incorrecta."){
-        $errorLogin= $usuario;
+      /* if ($usuario == "La contraseña es incorrecta."){
+        $errorLogin= $usuario; */
         
-      } elseif ($usuario==null){
+      if ($usuario==null){
         $errorLogin = "El mail no se encuentra registrado. Por favor, regístrese haciendo <a href='#section-register'>click acá</a>.";
       }
+
+      //redirijo
+      header ("Location:index.php");
+      exit;
 
       //session va en otra pagina??
 

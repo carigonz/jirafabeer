@@ -126,33 +126,26 @@ function validarLogin($datos){
     $errores["email"]="Campo obligatorio.";
   } elseif (!filter_var($datosFinales["email"],FILTER_VALIDATE_EMAIL)) {
     $errores["email"]="Ingrese un email válido.";
-  } elseif (!existeElUsuario($datosFinales["email"])){
-    $errores["email"]="El mail no existe.";
+  } elseif (existeElUsuario($datosFinales["email"])){
+    $errores["email"]="El email no existe.";
   }
 
   //pass
   if(strlen($datosFinales["pass"])==0){
     $errores["pass"]="Campo obligatorio.";
-  }  else{
-      $usuario=buscarUsuario($datosFinales["email"]);
-      if (!password_verify($datosFinales["pass"], $usuario["pass"])){
-        $errores["pass"]= "La contraseña es incorrecta.";
-      }
-  //falta validar que email y pass coincidan con usuario
-  //$usuarios=file_get_contents("db.json");
-  //$array=json_decode($json,true);
-
-  //foreach ($array["usuarios"] as $key => $value) {
-    
+  }  
+  $usuario=buscarUsuario($datosFinales["email"]);
+  if (!password_verify($datosFinales["pass"], $usuario["pass"])){
+    $errores["pass"]= "La contraseña es incorrecta.";
   }
-
+  
   return $errores;
 }
 
 
 function buscarUsuario($email){
   if (!file_exists("db.json")){
-    $jsons="";
+    $json="";
   } else{
     $json=file_get_contents("db.json");
   }
@@ -163,7 +156,8 @@ function buscarUsuario($email){
 
   foreach ($array["usuarios"] as $position => $value){
     if($position["email"] ==$email){
-      return $usuario;
+     
+      return $position;
     }
   }
    return null;
@@ -207,7 +201,7 @@ function guardarUsuario($user){
 
 }
 
-function buscarPorEmail($email){
+/* function buscarPorEmail($email){
   if(!file_exists("db.json")){
     $usuarios="";
   } else{
@@ -221,14 +215,15 @@ function buscarPorEmail($email){
   //$array corresponde a un array asociativo puesto que en caso de querer guardar alguna otra informacion en el archivo json tengo todos los usuarios en la posicion $usuarios de mi json
     foreach ($array["usuarios"] as $usuario) {
       if ($email==$usuario["email"]){
+        var_dump($usuario);
         return $usuario;
       }
+      return "La contraseña es incorrecta.";
     }
-    return null;
-}
+} */
 
 function existeElUsuario($email){
-  return buscarPorEmail($email)!==null;
+  return buscarUsuario($email)!==null;
 }
 
 ?>
