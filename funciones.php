@@ -64,6 +64,7 @@ function actualizarRegistro($datos){
   if (isset($datos["lastName"])){
     if(strlen($datos["lastName"]) == 0){
     $errores["lastName"] = "Campo obligatorio.";
+    //la expresion regular no anda
     } elseif(preg_match("^[a-z[:space:]]*$^",$_POST['name'])===false){
     $errores["lastName"] = "El nombre no puede contener números.";
     }
