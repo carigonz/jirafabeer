@@ -48,42 +48,125 @@ function validarRegistro($datos){
   return $errores;
 }
 
-function validarLogin($datos){
+function actualizarRegistro($datos){
   $errores =[];
-  $datosFinales=[];
+
+  //nombre
+  if (isset($datos["name"])){
+    if (strlen($datos["name"])==0){
+      $errores["name"]="El campo no puede estar vacío.";
+    }elseif (preg_match("^[a-z[:space:]]*$^",$_POST['name'])===false){
+      $errores["name"] = "El nombre no puede contener números.";
+    }
+  }
+
+  //apellido
+  if (isset($datos["lastName"])){
+    if(strlen($datos["lastName"]) == 0){
+    $errores["lastName"] = "Campo obligatorio.";
+    } elseif(preg_match("^[a-z[:space:]]*$^",$_POST['name'])===false){
+    $errores["lastName"] = "El nombre no puede contener números.";
+    }
+  }
+
+  //gender
+ /*  if(!isset($datos["gender"])){
+    $errores["gender"]="Por favor, elija una opción.";
+  } */
 
   //email
-  if(strlen($datos["email"])==0){
-    $errores["email"]="Campo obligatorio.";
-  } elseif (!filter_var($datos["email"],FILTER_VALIDATE_EMAIL)) {
-    $errores["email"]="Ingrese un email válido.";
+  if (isset($datos["email"]) || isset($datos["email2"])){
+    if(strlen($datos["email"])==0){
+      $errores["email"]="El campo no puede estar vacío.";
+    } elseif (strlen($datos["email2"])==0){
+        $errores["email"]="El campo no puede estar vacío.";
+    } elseif (!filter_var($datos["email"],FILTER_VALIDATE_EMAIL)) {
+      $errores["email"]="Ingrese un email válido.";
+    } elseif (!filter_var($datos["email2"],FILTER_VALIDATE_EMAIL)) {
+      $errores["email"]="Ingrese un email válido.";
+    } elseif ($datos["email"]!=$datos["email2"]){
+      $errores["email"]="las contraseñas no coinciden.";
+    }
+    //Y como valido si el mail esta registrado con otro nombre??
   } 
 
+
   //pass
-  if(strlen($datos["pass"])==0){
-    $errores["pass"]="Campo obligatorio.";
-  } /* elseif(strlen($datos["pass2"])==0){
-    $errores["pass"]="Verifique la contraseña.";
-  } elseif ($datos["pass"] != $datos["pass2"]){
-    $errores["pass"]="Las contraseñas no coinciden.";
-  } */
+  if (isset($datos["pass"])||isset($datos["pass22"])||isset($datos["pass3"])){
+    if(strlen($datos["pass"])==0 || strlen($datos["pass2"])==0 || strlen($datos["pass3"])==0){
+      $errores["pass"]="Campo obligatorio.";
+    } elseif ($datos["pass2"] != $datos["pass3"]){
+      $errores["pass"]="Las contraseñas no coinciden.";
+    } elseif ($datos["pass"]==$datos["pass2"]) {
+      $errores["pass"]="La contraseña no puede ser la misma.";
+    }
+    //elseif (la contraseña original no es correcta){
+      //$errores["pass"]="La contraseña actual es incorrecta.";
+    //} elseif (la contraseña original es correcta){
+      //guardar en json $usuario["pass"] = pass2/pass3
+    //}
+}
+
+
+
   return $errores;
 }
 
 
-function buscarUsuario($email,$pass){
+function validarLogin($datos){
+  $errores =[];
+  $datosFinales=[];
+  //para que sirve $datosFinales??????
 
-  $json=file_get_contents("db.json");
-  $array=json_decode($json,true);
-  $pass=password_hash($pass,PASSWORD_DEFAULT);
-  foreach ($array["usuarios"] as $value){
-    if($usuarios["email"] ==$email);
-      if($usuarios["pass"]==$pass){
-        return $usuarios;
-      } else{
-        return $noExisteUsuario= "El mail no se encuentra registrado.";
-      }
+  foreach ($datos as $position => $valor){
+    $datosFinales[$position]=trim($valor);
   }
+  //email
+  if(strlen($datosFinales["email"])==0){
+    $errores["email"]="Campo obligatorio.";
+  } elseif (!filter_var($datosFinales["email"],FILTER_VALIDATE_EMAIL)) {
+    $errores["email"]="Ingrese un email válido.";
+  } elseif (!existeElUsuario($datosFinales["email"])){
+    $errores["email"]="El mail no existe.";
+  }
+
+  //pass
+  if(strlen($datosFinales["pass"])==0){
+    $errores["pass"]="Campo obligatorio.";
+  }  else{
+      $usuario=buscarUsuario($datosFinales["email"]);
+      if (!password_verify($datosFinales["pass"], $usuario["pass"])){
+        $errores["pass"]= "La contraseña es incorrecta.";
+      }
+  //falta validar que email y pass coincidan con usuario
+  //$usuarios=file_get_contents("db.json");
+  //$array=json_decode($json,true);
+
+  //foreach ($array["usuarios"] as $key => $value) {
+    
+  }
+
+  return $errores;
+}
+
+
+function buscarUsuario($email){
+  if (!file_exists("db.json")){
+    $jsons="";
+  } else{
+    $json=file_get_contents("db.json");
+  }
+  if ($json ==""){
+    return null;
+  }
+  $array=json_decode($json,true);
+
+  foreach ($array["usuarios"] as $position => $value){
+    if($position["email"] ==$email){
+      return $usuario;
+    }
+  }
+   return null;
 }
 
 
@@ -95,7 +178,7 @@ function lastID(){
   if(isset($array)==false){
     return $lastId=0;
   }
-  //poruqe $array es asociativo a "usuarios"??
+  
   $ultimoElemento=array_pop($array["usuarios"]);
   $lastId=$ultimoElemento["id"]+1;
   return $lastId;
@@ -147,4 +230,5 @@ function buscarPorEmail($email){
 function existeElUsuario($email){
   return buscarPorEmail($email)!==null;
 }
+
 ?>
