@@ -126,7 +126,7 @@ function validarLogin($datos){
     $errores["email"]="Campo obligatorio.";
   } elseif (!filter_var($datosFinales["email"],FILTER_VALIDATE_EMAIL)) {
     $errores["email"]="Ingrese un email válido.";
-  } elseif (existeElUsuario($datosFinales["email"])){
+  } elseif (!existeElUsuario($datosFinales["email"])){
     $errores["email"]="El email no existe.";
   }
 
@@ -154,9 +154,8 @@ function buscarUsuario($email){
   }
   $array=json_decode($json,true);
 
-  foreach ($array["usuarios"] as $position => $value){
+  foreach ($array["usuarios"] as $position){
     if($position["email"] ==$email){
-     
       return $position;
     }
   }

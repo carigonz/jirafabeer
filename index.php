@@ -46,8 +46,9 @@ if ($_POST) {
     if (empty($errores)){
       $usuario= buscarUsuario($_POST["email"]);
       
-      var_dump($usuario);
       //var_dump($usuario);
+      //exit;
+      
       /* if ($usuario == "La contraseña es incorrecta."){
         $errorLogin= $usuario; */
         
