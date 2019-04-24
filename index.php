@@ -57,8 +57,8 @@ if ($_POST) {
       }
 
       //redirijo
-      header ("Location:exito.php");
-      exit;
+      //header ("Location:exito.php");
+      //exit;
 
       //session va en otra pagina??
 
@@ -110,7 +110,7 @@ if ($_POST) {
       <div id="contenido">
         <section class="landing" id="home">
             <div class="bloque-home">
-                 <!-- <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video> -->
+                <!-- <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video> -->
                 <div class="logo-landing">
                     <img class="logo-landing-img" src="IMG\girafa-beer-logo.png" alt="girafa-logo">
                     <h2 class="title-princ">jirafa BrewHouse</h2>

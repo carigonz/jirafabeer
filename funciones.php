@@ -9,15 +9,15 @@ function validarRegistro($datos){
   //nombre
   if(strlen($datos["name"]) == 0){
     $errores["name"] = "Campo obligatorio.";
-  } elseif (ctype_alpha($datos["name"]) == false){
+  } elseif (!preg_match('/^[\p{L} ]+$/u',$datos["name"])){
     $errores["name"] = "El nombre no puede contener números.";
   }
 
   //apellido
   if(strlen($datos["lastName"]) == 0){
     $errores["lastName"] = "Campo obligatorio.";
-  } elseif(ctype_alpha($datos["lastName"])==false){
-    $errores["lastName"] = "El nombre no puede contener números.";
+  } elseif(!preg_match('/^[\p{L} ]+$/u',$datos["lastName"])){
+    $errores["lastName"] = "El apellido no puede contener números.";
   }
 
   //gender
@@ -55,7 +55,7 @@ function actualizarRegistro($datos){
   if (isset($datos["name"])){
     if (strlen($datos["name"])==0){
       $errores["name"]="El campo no puede estar vacío.";
-    }elseif (preg_match("/^[0-9]+$^/",$_POST['name'])){
+    }elseif (!preg_match('/^[\p{L} ]+$/u',$datos["name"])){
       $errores["name"] = "El nombre no puede contener números.";
     }
   }
@@ -65,8 +65,8 @@ function actualizarRegistro($datos){
     if(strlen($datos["lastName"]) == 0){
     $errores["lastName"] = "Campo obligatorio.";
     //la expresion regular no anda
-    } elseif(preg_match("^[a-z[:space:]]*$^",$_POST['name'])===false){
-    $errores["lastName"] = "El nombre no puede contener números.";
+    } elseif(!preg_match('/^[\p{L} ]+$/u',$datos["lastName"])){
+    $errores["lastName"] = "El apellido no puede contener números.";
     }
   }
 
