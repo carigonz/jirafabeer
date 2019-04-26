@@ -1,7 +1,9 @@
 <?php
 
-//echo "soy funciones.php";
 
+// session_start();
+//echo "soy funciones.php";
+//session_start();
 function validarRegistro($datos){
   $errores =[];
   $datosFinales=[];
@@ -114,10 +116,74 @@ function actualizarRegistro($datos){
 }
 
 
+
+function buscarUsuario($email){
+  var_dump($email);
+  if (!file_exists("db.json")){
+    $json="";
+  } else{
+    $json=file_get_contents("db.json");
+  }
+  if ($json ==""){
+    return null;
+  }
+  $array=json_decode($json,true);
+//esto no anda no se porque
+  //var_dump($array);
+  foreach ($array["usuarios"] as $position){
+    if($position["email"] == $email){
+      //var_dump($position);
+      return $position;
+    }
+  }
+  return null;
+}
+
+
+function lastID(){
+  $json=file_get_contents("db.json");
+  $array=json_decode($json,true);
+
+  if(isset($array)==false){
+    return $lastId=0;
+  }
+  
+  $ultimoElemento=array_pop($array["usuarios"]);
+  $lastId=$ultimoElemento["id"]+1;
+  return $lastId;
+}
+
+function armarUsuario($array){
+
+  return [
+    "id"=>lastId(),
+    "name"=>trim($array["name"]),
+    "lastName"=>trim($array["lastName"]),
+    "email"=>trim($array["email"]),
+    "pass"=>password_hash($array["pass"],PASSWORD_DEFAULT)
+  ];
+}
+
+function guardarUsuario($user){
+
+  $json=file_get_contents("db.json");
+  $array=json_decode($json,true);
+  $array["usuarios"][]=$user;
+  //que hace json pretty print?
+  $array=json_encode($array, JSON_PRETTY_PRINT);
+  file_put_contents("db.json",$array);
+
+}
+
+
+function existeElUsuario($email){
+  return buscarUsuario($email)!==null;
+}
+
+
 function validarLogin($datos){
   $errores =[];
   $datosFinales=[];
-  //para que sirve $datosFinales??????
 
   foreach ($datos as $position => $valor){
     $datosFinales[$position]=trim($valor);
@@ -143,87 +209,20 @@ function validarLogin($datos){
   return $errores;
 }
 
-
-function buscarUsuario($email){
-  if (!file_exists("db.json")){
-    $json="";
-  } else{
-    $json=file_get_contents("db.json");
-  }
-  if ($json ==""){
-    return null;
-  }
-  $array=json_decode($json,true);
-
-  foreach ($array["usuarios"] as $position){
-    if($position["email"] ==$email){
-      return $position;
-    }
-  }
-   return null;
+function loguearUsuario($email){
+  $_SESSION["email"]=$email;
 }
 
 
-
-function lastID(){
-  $json=file_get_contents("db.json");
-  $array=json_decode($json,true);
-
-  if(isset($array)==false){
-    return $lastId=0;
-  }
-  
-  $ultimoElemento=array_pop($array["usuarios"]);
-  $lastId=$ultimoElemento["id"]+1;
-  return $lastId;
+function usuarioLogueado(){
+  return isset($_SESSION["email"]);
 }
 
-function armarUsuario($array){
-
-  return [
-    "id"=>lastId(),
-    "name"=>trim($array["name"]),
-    "lastName"=>trim($array["lastName"]),
-    "email"=>trim($array["email"]),
-    "pass"=>password_hash($array["pass"],PASSWORD_DEFAULT)
-  ];
-
-}
-
-function guardarUsuario($user){
-
-  $json=file_get_contents("db.json");
-  $array=json_decode($json,true);
-  $array["usuarios"][]=$user;
-  //que hace json pretty print?
-  $array=json_encode($array, JSON_PRETTY_PRINT);
-  file_put_contents("db.json",$array);
-
-}
-
-/* function buscarPorEmail($email){
-  if(!file_exists("db.json")){
-    $usuarios="";
-  } else{
-    $usuarios=file_get_contents("db.json");
+function traerUsuarioLogueado(){
+  if (isset($_SESSION["email"])){
+    return buscarUsuario($_SESSION["email"]);
   }
-
-  if ($usuarios==""){
-    return null;
-  }
-    $array=json_decode($usuarios,true);
-  //$array corresponde a un array asociativo puesto que en caso de querer guardar alguna otra informacion en el archivo json tengo todos los usuarios en la posicion $usuarios de mi json
-    foreach ($array["usuarios"] as $usuario) {
-      if ($email==$usuario["email"]){
-        var_dump($usuario);
-        return $usuario;
-      }
-      return "La contraseña es incorrecta.";
-    }
-} */
-
-function existeElUsuario($email){
-  return buscarUsuario($email)!==null;
+  return false;
 }
 
 ?>

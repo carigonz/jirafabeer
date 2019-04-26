@@ -1,12 +1,15 @@
 <?php
 
-//session_start();
-require_once("funciones.php");
+session_start();
+require_once "funciones.php";
+var_dump($_SESSION);
+/* if(usuarioLogueado()){
+  header("Location:index.php");
+  exit;
+} */
+$usuario = traerUsuarioLogueado();
 
-//$_SESSION["name"]=$usuario["name"];
-//$_SESSION["lastName"]=$usuario["lastName"];
-//$_SESSION["email"]=$usuario["email"];
-//$_SESSION["gender"]=$usuario["gender"];
+var_dump($usuario);
 
 //deberia completar las variables desde $_SESSION
 $errores=[];
@@ -17,10 +20,10 @@ $usuarioExistente="";
 $errorLogin=false;
 
 if ($_POST){
-  var_dump($_POST);
+  //var_dump($_POST);
   $errores=actualizarRegistro($_POST);
 
-  var_dump($errores);
+  //var_dump($errores);
 }
 
 ?>
@@ -44,7 +47,7 @@ if ($_POST){
             <div id="section-forms">
               <div class="formulario">
                 
-                  <h1 id="section-register">Bienvenido <?= $_SESSION["name"]?></h1>
+                  <h1 id="section-register">Bienvenide <?= $usuario["name"]?></h1>
                   <h3>Actualizá tus datos</h3>
               <form action="#section-register" method="POST" class="tarjets">
                 <?php /* if (existeElUsuario($_POST["email"])): */?>
@@ -148,7 +151,7 @@ if ($_POST){
                       <input type="password" class="form-control" id="pass3" name="pass3" maxlength="20" tabindex="17" autocapitalize="none" spellcheck="false" autocorrect="off" autocomplete="off" data-uid="5">
                     </div>
                   <?php endif?>
-                    <button type="submit" name="register" value="register" class="btn-standard">Registrarme</button>
+                    <button type="submit" name="register" value="register" class="btn-standard">Actualizar</button>
                   </form>
               </div>
             </div>
