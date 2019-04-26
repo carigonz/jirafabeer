@@ -546,11 +546,9 @@ label[for=abrir-cerrar]{
 }
 .menu li:nth-last-child(1){
   float: right;
-  font-size: 1.2em;
 }
 .btn-home{
   color: #faa914;
-  font-size: 1.2em;
   padding:0;
 }
 .sidebar .btn-home{

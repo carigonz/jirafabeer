@@ -3,10 +3,10 @@
 require_once "funciones.php";
 
 //session_start();
-if(usuarioLogueado()){
+/* if(usuarioLogueado()){
   header("Location:index.php");
   exit;
-}
+} */
 
 
 $errores=[];
@@ -15,14 +15,16 @@ $nameOk="";
 $emailOk="";
 $usuarioExistente="";
 $errorLogin=false;
+$logout= "logout";
+$login="login";
 
-var_dump($_POST);
-echo "<br>";
+//var_dump($_POST);
+//echo "<br>";
 if ($_POST) {
   if (!empty($_POST["register"])) {
     
     $errores = validarRegistro($_POST);
-    var_dump($errores);
+    //var_dump($errores);
     $nameOk = trim($_POST["name"]);
     $lastNameOk = trim($_POST["lastName"]);
     $emailOk = trim($_POST["email"]);
@@ -42,11 +44,11 @@ if ($_POST) {
   if (!empty($_POST['login'])) {
     
     $errores = validarLogin($_POST);
-    var_dump($errores);
+    //var_dump($errores);
 
     if (empty($errores)){
       $usuario= buscarUsuario($_POST["email"]);
-      var_dump($_POST["email"]);
+      var_dump($usuario);
       
       //var_dump($usuario);
       //exit;
@@ -60,9 +62,6 @@ if ($_POST) {
 
       header("Location:exito.php");
       exit;
-
-
-
     }
     
   }
@@ -84,7 +83,7 @@ if ($_POST) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <!-- <header class="nav-header"> 
+    <header class="nav-header"> 
         <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
         <label for="abrir-cerrar"><a href="#home" class="btn-home"><i class="fa fa-home"></i></a><span class="abrir">&#9776;</span><span class="cerrar">&#9776; Cerrar</span></label>
         <div id="sidebar" class="sidebar">
@@ -92,16 +91,21 @@ if ($_POST) {
                 <li><a href="#section-nosotros">nosotros</a></li>
                 <li><a href="#section-estilos">estilos</a></li>
                 <li><a href="#section-contact">contacto</a></li>
-                <li><a href="#section-forms">login</a></li>
-                <li><a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a></li>
+                <li><a href="index.php">home</a></li><!-- 
+                <li><a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a></li> -->
+                <li><li><?php if (usuariologueado()):?>
+                <a href="logout.php"><?= $logout?>
+                  <?php else:?>
+                  <a href="#section-forms"><?= $login?>
+                  <?php endif?></a></li></li>
             </ul>
         </div>
-    </header> -->
+    </header>
     <main>
       <div id="contenido">
         <section class="landing" id="home">
             <div class="bloque-home">
-                <!-- <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video> -->
+                <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video>
                 <div class="logo-landing">
                     <img class="logo-landing-img" src="IMG\girafa-beer-logo.png" alt="girafa-logo">
                     <h2 class="title-princ">jirafa BrewHouse</h2>
@@ -147,7 +151,7 @@ if ($_POST) {
         </section>
         <section id="section-contact">
           <div class="contain-contact">
-            <div class="contacto formulario">
+            <!-- <div class="contacto formulario">
               <h1>¿JirafaBeer en tu evento? Contactanos</h1>
               <form action="#" method="get" class="tarjets">
                 <div class="form-group">
@@ -166,7 +170,7 @@ if ($_POST) {
                 <button class="btn-standard" type="submit">enviar</button>
             </div>
               </form>
-            </div>
+            </div> -->
             <div id="section-forms">
               <div class="formulario">
                 <h1>LOGIN</h1>

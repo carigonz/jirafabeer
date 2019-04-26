@@ -1,7 +1,7 @@
 <?php
 
 
-// session_start();
+session_start();
 //echo "soy funciones.php";
 //session_start();
 function validarRegistro($datos){
@@ -118,7 +118,7 @@ function actualizarRegistro($datos){
 
 
 function buscarUsuario($email){
-  var_dump($email);
+  //var_dump($email);
   if (!file_exists("db.json")){
     $json="";
   } else{

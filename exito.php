@@ -1,23 +1,26 @@
 <?php
 
-session_start();
 require_once "funciones.php";
-var_dump($_SESSION);
+
+//session_start();
+//var_dump($_SESSION);
 /* if(usuarioLogueado()){
   header("Location:index.php");
   exit;
 } */
 $usuario = traerUsuarioLogueado();
 
-var_dump($usuario);
+//var_dump($usuario);
 
 //deberia completar las variables desde $_SESSION
 $errores=[];
-$lastNameOk="";
-$nameOk="";
-$emailOk="";
+$lastNameOk=$usuario["lastName"];
+$nameOk=$usuario["name"];
+$emailOk=$usuario["email"];
 $usuarioExistente="";
 $errorLogin=false;
+$logout= "logout";
+$login="login";
 
 if ($_POST){
   //var_dump($_POST);
@@ -41,8 +44,27 @@ if ($_POST){
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <div class ="container">
-  <section id="section-contact">
+    <header class="nav-header"> 
+        <input type="checkbox" id="abrir-cerrar" name="abrir-cerrar" value="">
+        <label for="abrir-cerrar"><a href="#home" class="btn-home"><i class="fa fa-home"></i></a><span class="abrir">&#9776;</span><span class="cerrar">&#9776; Cerrar</span></label>
+        <div id="sidebar" class="sidebar">
+            <ul class="menu">
+                <li><a href="index.php#section-nosotros">nosotros</a></li>
+                <li><a href="index.php#section-estilos">estilos</a></li>
+                <li><a href="index.php#section-contact">contacto</a></li>
+                <li><a href="index.php">home</a></li><!-- 
+                <a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a> -->
+<li><li><a href="#section-forms"><?php if (usuariologueado()):?>
+                  <?= $logout?>
+                  <?php else:?>
+                  <?= $login?>
+                  <?php endif?></a></li></li>
+            </ul>
+        </div>
+    </header>
+    <main>
+      <div class ="container">
+      <section id="section-contact">
           <div class="contain-contact">
             <div id="section-forms">
               <div class="formulario">
@@ -157,6 +179,16 @@ if ($_POST){
             </div>
           </div>
         </section>
+      </main>
+      <footer class="footer">
+        <div class="iconos">
+          <a href=""><i class="fab fa-facebook-f"></i></a>
+          <a href=""><i class="fab fa-instagram"></i></a>
+          <a href=""><i class="fab fa-twitter"></i></a>
+        </div>
+        <p class="nota">Beber con moderación. Prohibida su venta a menores de 18 años.</p>
+        <h5 class="copy-footer">Jirafa BrewHouse ® Todos los derechos reservados</h5>
+      </footer>
   </div>
 </body>
 </html>
