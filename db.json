@@ -37,6 +37,22 @@
             "email": "julieta@lado.com",
             "gender": "fem",
             "pass": "$2y$10$gS5Z7vr5IPjkvmkyCbF0vOCNmIKlg1Z0aj4HxUjrKMP47swAsEn4."
+        },
+        {
+            "id": 5,
+            "name": "narela delicia",
+            "lastName": "fleitas",
+            "email": "narela@fleitas.com",
+            "gender": "fem",
+            "pass": "$2y$10$ks94NYKh.SLYylEqswKoDOatttCZ7eE8WREQseJR5J1eSEMyjNF\/i"
+        },
+        {
+            "id": 6,
+            "name": "HOLA",
+            "lastName": "HOLa",
+            "email": "hola@hola.com",
+            "gender": "masc",
+            "pass": "$2y$10$5Dn2wj8tJ\/5tQGuU8WqkeeWBsTgoFbisHAo.pHJySidXvM1V6uNoK"
         }
     ]
 }

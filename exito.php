@@ -5,7 +5,7 @@ require_once "funciones.php";
 var_dump($_SESSION["email"]);
 
 //no se porque me esta guardando el array usuario dentro de una posicion llamada email dentro de session
-$usuario = $_SESSION["email"];
+$usuario = traerUsuarioLogueado();
 
 var_dump($usuario);
 

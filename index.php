@@ -15,9 +15,9 @@ $login="login";
 //var_dump($_POST);
 //echo "<br>";
 if (usuarioLogueado()){
-  //$usuario=traerUsuarioLogueado();
+  $usuario=traerUsuarioLogueado();
   //la funcion traer usuario logueado anda medio mal
-  $usuario = $_SESSION["email"]; //sigo sin saber porque esta el array de usuario adentro de una posicion email dentro de session
+  //$usuario = $_SESSION["email"]; //sigo sin saber porque esta el array de usuario adentro de una posicion email dentro de session
   $lastNameOk=$usuario["lastName"];
   $nameOk=$usuario["name"];
   $emailOk=$usuario["email"];
@@ -43,8 +43,8 @@ if ($_POST) {
 
         //logueo al usuario
         $usuario= buscarUsuario($_POST["email"]);
-        loguearUsuario($usuario);
-
+        loguearUsuario($_POST["email"]);
+        var_dump($usuario);
         //redirijo
         header("Location:exito.php");
         exit;
