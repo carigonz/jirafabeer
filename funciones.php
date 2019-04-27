@@ -128,7 +128,7 @@ function buscarUsuario($email){
     return null;
   }
   $array=json_decode($json,true);
-//esto no anda no se porque
+
   //var_dump($array);
   foreach ($array["usuarios"] as $position){
     if($position["email"] == $email){

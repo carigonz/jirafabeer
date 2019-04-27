@@ -13,6 +13,30 @@
             "lastName": "fulanito",
             "email": "cosme@fulanito.com",
             "pass": "$2y$10$sQ6JYlvgi9YfjSE163Uyfe6WdSPQhA3cjfGUa9z3N9zOOpWRP62XO"
+        },
+        {
+            "id": 2,
+            "name": "ayra",
+            "lastName": "stark",
+            "email": "ayra@stark.com",
+            "gender": "fem",
+            "pass": "$2y$10$g\/n34rVZ9TesCt9PGKsMb.KlhpktAEQbyYV8ol\/AHsfDILf7mfOvS"
+        },
+        {
+            "id": 3,
+            "name": "pepe",
+            "lastName": "argento",
+            "email": "pepe@argento.com",
+            "gender": "masc",
+            "pass": "$2y$10$MlNWf3\/Q8Nrh\/BQ0JGtqA.XN4ZN\/mtxogO2TwayC1mYCZn1KDcKs6"
+        },
+        {
+            "id": 4,
+            "name": "julieta",
+            "lastName": "lado",
+            "email": "julieta@lado.com",
+            "gender": "fem",
+            "pass": "$2y$10$gS5Z7vr5IPjkvmkyCbF0vOCNmIKlg1Z0aj4HxUjrKMP47swAsEn4."
         }
     ]
 }

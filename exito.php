@@ -2,9 +2,10 @@
 
 require_once "funciones.php";
 
-//var_dump($_COOKIE);
+var_dump($_SESSION["email"]);
 
-$usuario = traerUsuarioLogueado();
+//no se porque me esta guardando el array usuario dentro de una posicion llamada email dentro de session
+$usuario = $_SESSION["email"];
 
 var_dump($usuario);
 
@@ -51,7 +52,7 @@ if ($_POST){
                 <li><a href="index.php">home</a></li><!-- 
                 <a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a> -->
                 <?php if (usuariologueado()):?>
-                <li><span class="welcome">Bienvenide, <?= $nameOk?>! </span><a href="logout.php"><?= $logout?>
+                <li><span style="padding: 14.5px 16px; color: #f90; float:left" >Bienvenide, <?= $nameOk?> !</span><a href="logout.php"><?= $logout?>
                   <?php else:?>
                   <li><a href="#section-forms"><?= $login?>
                   <?php endif?></a></li>

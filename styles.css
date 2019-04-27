@@ -545,7 +545,7 @@ label[for=abrir-cerrar]{
   padding: 14.5px 10px;
 }
 
-.menu li span .welcome{
+#welcome {
   color: #f90;
   float:left;
   padding: 14.5px 16px;
