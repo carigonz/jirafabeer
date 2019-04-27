@@ -20,6 +20,14 @@ $login="login";
 
 //var_dump($_POST);
 //echo "<br>";
+if (usuarioLogueado()){
+  $usuario=traerUsuarioLogueado();
+  $lastNameOk=$usuario["lastName"];
+  $nameOk=$usuario["name"];
+  $emailOk=$usuario["email"];
+}
+
+
 if ($_POST) {
   if (!empty($_POST["register"])) {
     
@@ -49,7 +57,7 @@ if ($_POST) {
     if (empty($errores)){
       $usuario= buscarUsuario($_POST["email"]);
       var_dump($usuario);
-      
+      var_dump($_POST);
       //var_dump($usuario);
       //exit;
       
@@ -58,6 +66,13 @@ if ($_POST) {
       }
       //logeo al usuario
       loguearUsuario($usuario["email"]);
+
+      //seteo de cookies
+
+      if (isset($_POST["remember"])){
+        setCookies($usuario);
+      }
+
       //redirijo
 
       header("Location:exito.php");
@@ -67,6 +82,8 @@ if ($_POST) {
   }
 
 }
+
+
 ?>
 
 
@@ -93,20 +110,20 @@ if ($_POST) {
                 <li><a href="#section-contact">contacto</a></li>
                 <li><a href="index.php">home</a></li><!-- 
                 <li><a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a></li> -->
-                <li><li><?php if (usuariologueado()):?>
-                <a href="logout.php"><?= $logout?>
+                <?php if (usuariologueado()):?>
+                <li><span class="welcome">Bienvenide, <?= $nameOk?>! </span><a href="logout.php"><?= $logout?>
                   <?php else:?>
-                  <a href="#section-forms"><?= $login?>
-                  <?php endif?></a></li></li>
+                  <li><a href="#section-forms"><?= $login?>
+                  <?php endif?></a></li>
             </ul>
         </div>
     </header>
     <main>
       <div id="contenido">
         <section class="landing" id="home">
-            <div class="bloque-home">
+            <div class="bloque-home"><!-- 
                 <video class="background-video" poster="http://adnhd.com/wp-content/uploads/2018/10/0029462316.jpg" src="IMG/Loop-Background.mp4" autoplay loop muted></video>
-                <div class="logo-landing">
+                --> <div class="logo-landing">
                     <img class="logo-landing-img" src="IMG\girafa-beer-logo.png" alt="girafa-logo">
                     <h2 class="title-princ">jirafa BrewHouse</h2>
                 </div>
@@ -201,7 +218,7 @@ if ($_POST) {
                   </div>
                   <button type="submit" class="btn-standard" value="login" name="login">Ingresar</button>
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="remember">
+                    <input type="checkbox" value="remember" class="form-check-input" name="remember" id="remember">
                     <label class="form-check-label" for="remember">Recordarme</label>
                   </div>
                 </form>

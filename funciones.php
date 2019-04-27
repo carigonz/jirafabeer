@@ -3,7 +3,7 @@
 
 session_start();
 //echo "soy funciones.php";
-//session_start();
+
 function validarRegistro($datos){
   $errores =[];
   $datosFinales=[];
@@ -160,6 +160,7 @@ function armarUsuario($array){
     "name"=>trim($array["name"]),
     "lastName"=>trim($array["lastName"]),
     "email"=>trim($array["email"]),
+    "gender"=>$array["gender"],
     "pass"=>password_hash($array["pass"],PASSWORD_DEFAULT)
   ];
 }
@@ -206,6 +207,9 @@ function validarLogin($datos){
     $errores["pass"]= "La contraseña es incorrecta.";
   }
   
+
+
+
   return $errores;
 }
 
@@ -223,6 +227,12 @@ function traerUsuarioLogueado(){
     return buscarUsuario($_SESSION["email"]);
   }
   return false;
+}
+
+function setCookies($usuario){
+  setCookie("name",$usuario["name"],time()+60*60*24*30);
+  setCookie("email",$usuario["email"],time()+60*60*24*30);
+  setCookie("pass",$usuario["pass"],time()+60*60*24*30);
 }
 
 ?>

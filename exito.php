@@ -2,15 +2,11 @@
 
 require_once "funciones.php";
 
-//session_start();
-//var_dump($_SESSION);
-/* if(usuarioLogueado()){
-  header("Location:index.php");
-  exit;
-} */
+//var_dump($_COOKIE);
+
 $usuario = traerUsuarioLogueado();
 
-//var_dump($usuario);
+var_dump($usuario);
 
 //deberia completar las variables desde $_SESSION
 $errores=[];
@@ -54,11 +50,11 @@ if ($_POST){
                 <li><a href="index.php#section-contact">contacto</a></li>
                 <li><a href="index.php">home</a></li><!-- 
                 <a class="btn-home" href="#home"><i class="fa fa-home btn-home"></i></a> -->
-<li><li><a href="#section-forms"><?php if (usuariologueado()):?>
-                  <?= $logout?>
+                <?php if (usuariologueado()):?>
+                <li><span class="welcome">Bienvenide, <?= $nameOk?>! </span><a href="logout.php"><?= $logout?>
                   <?php else:?>
-                  <?= $login?>
-                  <?php endif?></a></li></li>
+                  <li><a href="#section-forms"><?= $login?>
+                  <?php endif?></a></li>
             </ul>
         </div>
     </header>
